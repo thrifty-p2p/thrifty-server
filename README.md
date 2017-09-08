@@ -16,7 +16,7 @@ npm install
 nodemon
 ```
 
-Note: If you do not currently have nodemon install you will need to run the following command.
+Note: If you don't have nodemon installed, you will need to run the following command.
 
 ```
 npm install -g nodemon
