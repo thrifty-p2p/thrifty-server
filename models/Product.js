@@ -38,11 +38,12 @@ Product.relationMappings = {
   product_comments: {
     relation: Model.ManyToManyRelation,
     modelClass: `${__dirname}/Account`,
+    filter: query => query.select('account.id', 'username', 'first_name'),
     join: {
       from: 'product.id',
       through: {
         from: 'product_comment.product_id',
-        extra: ['id as comment_id', 'comment', 'created_at'],
+        extra: ['comment', 'created_at'],
         to: 'product_comment.account_id'
       },
       to: 'account.id'

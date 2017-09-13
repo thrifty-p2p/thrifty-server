@@ -12,4 +12,14 @@ router.get('/', (req, res, next) => {
     });
 });
 
+router.get('/:id', (req, res, next) => {
+  Product
+    .query()
+    .where('id', req.params.id)
+    .eager('[categories, images, seller, product_comments]')
+    .then(products => {
+      res.json(products);
+    });
+});
+
 module.exports = router;
