@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const auth = require('./auth');
 const account = require('./api/account');
+const product = require('./api/product');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(cookieParser());
 
 app.use('/api/auth', auth);
 app.use('/api/account', account);
+app.use('/api/product', product);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
