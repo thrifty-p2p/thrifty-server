@@ -9,7 +9,7 @@ class Product extends Model {
 Product.relationMappings = {
   categories: {
     relation: Model.ManyToManyRelation,
-    modelClass: __dirname + '/Category',
+    modelClass: `${__dirname}/Category`,
     join: {
       from: 'product.id',
       through: {
@@ -25,6 +25,27 @@ Product.relationMappings = {
     join: {
       from: 'product.id',
       to: 'image.product_id'
+    }
+  },
+  seller: {
+    relation: Model.HasOneRelation,
+    modelClass: `${__dirname}/Account`,
+    join: {
+      from: 'product.seller_id',
+      to: 'account.id'
+    }
+  },
+  product_comments: {
+    relation: Model.ManyToManyRelation,
+    modelClass: `${__dirname}/Account`,
+    join: {
+      from: 'product.id',
+      through: {
+        from: 'product_comment.product_id',
+        extra: ['id as comment_id', 'comment', 'created_at'],
+        to: 'product_comment.account_id'
+      },
+      to: 'account.id'
     }
   }
 }

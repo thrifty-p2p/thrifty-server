@@ -7,7 +7,7 @@ const Product = require('../models/Product');
 router.get('/', (req, res, next) => {
   Product
     .query()
-    .eager('categories', 'images')
+    .eager('[categories, images, seller, product_comments]')
     .then(products => {
       res.json(products);
     }
