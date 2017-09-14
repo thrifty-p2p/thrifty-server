@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const queries = require('../db/queries');
 const Product = require('../models/Product');
+const Category = require('../models/Category');
 
 router.get('/', (req, res, next) => {
   Product
@@ -21,5 +22,25 @@ router.get('/:id', (req, res, next) => {
       res.json(products);
     });
 });
+
+router.get('/category/:id', (req, res, next) => {
+  Category
+    .query()
+    .where('id', req.params.id)
+    .eager('[products, products.images, products.seller]')
+    .then(products => {
+      res.json(products);
+    });
+});
+
+// router.get('/category/:id', (req, res, next) => {
+//   Product
+//     .query()
+//     .from('category').where('id', req.params.id)
+//     .eager('[categories, images, seller, product_comments]')
+//     .then(products => {
+//       res.json(products);
+//     });
+// });
 
 module.exports = router;
