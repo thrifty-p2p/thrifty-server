@@ -27,20 +27,10 @@ router.get('/category/:id', (req, res, next) => {
   Category
     .query()
     .where('id', req.params.id)
-    .eager('[products, products.images, products.seller]')
+    .eager('[products, products.[images, seller]]')
     .then(products => {
       res.json(products);
     });
 });
-
-// router.get('/category/:id', (req, res, next) => {
-//   Product
-//     .query()
-//     .from('category').where('id', req.params.id)
-//     .eager('[categories, images, seller, product_comments]')
-//     .then(products => {
-//       res.json(products);
-//     });
-// });
 
 module.exports = router;
