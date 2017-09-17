@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const queries = require('../db/queries');
+const AuthMiddleware = require('../auth/middleware');
+const Queries = require('../db/queries');
 const Product = require('../models/Product');
 const Category = require('../models/Category');
 
@@ -30,6 +31,13 @@ router.get('/category/:id', (req, res, next) => {
     .eager('[products, products.[images, seller]]')
     .then(products => {
       res.json(products);
+    });
+});
+
+router.post('/new/uid/:id', AuthMiddleware.allowAccess, (req, res, next) => {
+  Queries.createNewProduct(req.body)
+    .then(product => {
+      res.json(product);
     });
 });
 
