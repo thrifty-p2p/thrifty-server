@@ -1,6 +1,11 @@
 const knex = require('./knex');
 
 module.exports = {
+  getProfileById: (id) => {
+    return knex('account_address').where('account_id', id)
+      .join('location', 'location.id', 'account_address.location_id')
+      .join('account', 'account_address.account_id', 'account.id')
+  },
   createNewProduct: (product) => {
     const {
       title,

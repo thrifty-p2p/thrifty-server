@@ -26,6 +26,14 @@ Account.relationMappings = {
       },
       to: 'product.id'
     }
+  },
+  address: {
+    relation: Model.BelongsToOneRelation,
+    modelClass: `${__dirname}/AccountAddress`,
+    join: {
+      from: 'account.id',
+      to: 'address_account.account_id',
+    }
   }
 }
 

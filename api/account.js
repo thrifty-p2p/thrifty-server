@@ -1,11 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const queries = require('../db/queries');
+const Queries = require('../db/queries');
 const Account = require('../models/Account');
 
 function isIdValid(req, res, next) {
   return !isNaN(req.params.id) ? next() : next(new Error("Invalid Id"));
 }
+
+router.get('/profile/:id', (req, res) => {
+  Queries.getProfileById(req.params.id)
+    .then(profile => {
+      res.json(profile);
+    });
+});
 
 router.get('/:id', (req, res, next) => {
   Account
@@ -25,6 +32,7 @@ router.get('/', (req, res, next) => {
       res.json(products);
     });
 });
+
 
 
 
