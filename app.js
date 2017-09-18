@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
+const AuthMiddleware = require('./auth/middleware')
 const auth = require('./auth');
 const account = require('./api/account');
 const product = require('./api/product');
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use(AuthMiddleware.checkTokenSetUser);
 app.use('/api/auth', auth);
 app.use('/api/account', account);
 app.use('/api/product', product);
