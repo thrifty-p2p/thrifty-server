@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
     Bucket: S3_BUCKET,
     Key: fileName,
     Expires: 60,
-    ContentType: 'image/jpeg',
+    ContentType: 'image/jpg',
     ACL: 'public-read'
   };
 
