@@ -11,6 +11,7 @@ const account = require('./api/account');
 const product = require('./api/product');
 const signS3 = require('./api/s3bucket');
 const payment = require('./api/payment');
+const order = require('./api/order');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use('/api/auth', auth);
 app.use('/api/account', account);
 app.use('/api/product', product);
 app.use('/api/payment', payment);
+app.use('/api/order', order);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

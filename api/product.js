@@ -43,4 +43,11 @@ router.post('/new/uid/:id',  (req, res, next) => {
     });
 });
 
+router.patch('/:id', (req, res) => {
+  Queries.updateProductAvailablity(req.params.id)
+    .then(product => {
+      res.json(product)
+    })
+});
+
 module.exports = router;

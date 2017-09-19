@@ -48,5 +48,29 @@ module.exports = {
           });
         });
     });
+  },
+
+  updateProductAvailablity: (id) => {
+    return knex('product').where('id', id)
+      .update({'is_available': false}, '*')
+  },
+
+  createOrder: (order) => {
+    const {product_id, buyer_id, transaction_id, seller_id} = order;
+
+    return knex('store_order').insert({
+      product_id,
+      buyer_id,
+      transaction_id
+    }, '*')
+    .then(() => {
+      return knex.select('total_sales').from('account').where('id', seller_id).first()
+        .then(sales => {
+          sales.total_sales += 1;
+          return knex('account').update({
+            total_sales: sales.total_sales
+          });
+        });
+    });
   }
 };
