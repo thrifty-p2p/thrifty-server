@@ -25,6 +25,7 @@ app.use('/api/auth', auth);
 app.use('/api/account', account);
 app.use('/api/product', product);
 app.use('/api/payment', payment);
+app.use('/api/sign-s3', signS3);
 app.use('/api/order', order);
 
 // catch 404 and forward to error handler

@@ -18,7 +18,7 @@ router.get('/:id', (req, res, next) => {
   Account
     .query()
     .where('id', req.params.id)
-    .eager('[products, products.[images, categories, product_comments]]')
+    .eager('[products, products.[images, seller, categories, product_comments]]')
     .then(products => {
       res.json(products);
     });
