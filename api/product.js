@@ -34,11 +34,20 @@ router.get('/category/:id', (req, res, next) => {
     });
 });
 
-router.post('/new/uid/:id', AuthMiddleware.allowAccess, (req, res, next) => {
+// AuthMiddleware.allowAccess,
+
+router.post('/new/uid/:id',  (req, res, next) => {
   Queries.createNewProduct(req.body)
     .then(product => {
       res.json(product);
     });
+});
+
+router.patch('/:id', (req, res) => {
+  Queries.updateProductAvailablity(req.params.id)
+    .then(product => {
+      res.json(product)
+    })
 });
 
 module.exports = router;

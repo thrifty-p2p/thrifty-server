@@ -1,9 +1,6 @@
 const express = require('express');
-const AWS = require('aws-sdk');
-
 const router = express.Router();
-
-const S3_BUCKET = process.env.S3_BUCKET;
+const AWS = require('aws-sdk');
 
 router.get('/', (req, res) => {
   const s3 = new AWS.S3({
@@ -12,7 +9,7 @@ router.get('/', (req, res) => {
   });
   const fileName = req.query['file-name'];
   const s3Params = {
-    Bucket: S3_BUCKET,
+    Bucket: process.env.S3_BUCKET,
     Key: fileName,
     Expires: 60,
     ContentType: 'image/jpeg',
@@ -26,11 +23,11 @@ router.get('/', (req, res) => {
     }
     const returnData = {
       signedRequest: data,
-      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+      url: `https://s3-us-east-2.amazonaws.com/${process.env.S3_BUCKET}/${fileName}`
+
     };
     return res.json(returnData);
   });
 });
-
 
 module.exports = router;

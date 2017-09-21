@@ -1,6 +1,11 @@
 const knex = require('./knex');
 
 module.exports = {
+  getProfileById: (id) => {
+    return knex('account_address').where('account_id', id)
+      .join('location', 'location.id', 'account_address.location_id')
+      .join('account', 'account_address.account_id', 'account.id')
+  },
   createNewProduct: (product) => {
     const {
       title,
@@ -39,6 +44,33 @@ module.exports = {
               createdProduct.category_names = product.category_names;
               createdProduct.image_url = product.image_url;
               return createdProduct;
+            });
+          });
+        });
+    });
+  },
+
+  updateProductAvailablity: (id) => {
+    return knex('product').where('id', id)
+      .update({'is_available': false}, '*')
+  },
+
+  createOrder: (order) => {
+    const {product_id, buyer_id, transaction_id, seller_id} = order;
+    return knex('store_order').insert({
+      product_id,
+      buyer_id,
+      transaction_id,
+    }, 'id')
+    .then(id => {
+      return knex('store_order').where('id', id[0])
+        .update({is_complete: true})
+        .then(result => {
+          return knex('account').where('id', seller_id).first()
+          .then(user => {
+            user.total_sales += 1;
+            return knex('account').update({
+              total_sales: user.total_sales
             });
           });
         });
