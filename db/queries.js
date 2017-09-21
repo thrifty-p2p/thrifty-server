@@ -57,18 +57,21 @@ module.exports = {
 
   createOrder: (order) => {
     const {product_id, buyer_id, transaction_id, seller_id} = order;
-
     return knex('store_order').insert({
       product_id,
       buyer_id,
-      transaction_id
-    }, '*')
-    .then(() => {
-      return knex.select('total_sales').from('account').where('id', seller_id).first()
-        .then(sales => {
-          sales.total_sales += 1;
-          return knex('account').update({
-            total_sales: sales.total_sales
+      transaction_id,
+    }, 'id')
+    .then(id => {
+      return knex('store_order').where('id', id[0])
+        .update({is_complete: true})
+        .then(result => {
+          return knex('account').where('id', seller_id).first()
+          .then(user => {
+            user.total_sales += 1;
+            return knex('account').update({
+              total_sales: user.total_sales
+            });
           });
         });
     });
