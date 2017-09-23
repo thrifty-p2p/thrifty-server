@@ -22,7 +22,7 @@ Note: If you don't have nodemon installed, you will need to run the following co
 npm install -g nodemon
 ```
 
-## Related Repositiries
+## Related Repositories
 
 * [Database](https://github.com/thrifty-p2p/thrifty-database)
 * [React Native Client](https://github.com/thrifty-p2p/thrifty-client)
